@@ -15,9 +15,8 @@ constructor(props){
 
   const onFinish = values => {
     console.log('Received values of form: ', values);
-        const username=values.username
-const password=values.password
-             axios.post('/login',{username,password}).then( (res)=>{console.log(res)})
+ 
+             axios.post('/login',{values}).then( (res)=>{console.log(res)})
         //this.props.history.replace('/')
  }
 
