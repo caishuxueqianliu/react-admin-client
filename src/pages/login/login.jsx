@@ -3,7 +3,7 @@ import  './login.less'
 import logo from './images/logo.png'
 import { Form,Input, Button} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-
+import axios from 'axios'
  export default class Login extends React.Component{
 
 constructor(props){
@@ -15,7 +15,10 @@ constructor(props){
 
   const onFinish = values => {
     console.log('Received values of form: ', values);
-
+        const username=values.username
+const password=values.password
+             axios.post('/login',{username,password}).then( (res)=>{console.log(res)})
+        //this.props.history.replace('/')
  }
 
 const onFinishFailed=( values, errorFields, outOfDate)=>{
@@ -27,9 +30,9 @@ const validatePwd=(rule, value,callback) => {
          if (!value ) {
             callback('Please input your Username!!')
               }
-              else if (value.length<6){
+              else if (value.length<4){
 
- callback('密码至少6位')
+ callback('密码至少4位')
               }
               
      else if(value.length>10){
@@ -71,7 +74,7 @@ onFinishFailed={onFinishFailed}    >
         name="username"
         rules={[
         { required: true, whitespace:true, message: 'Please input your Username!' },
-        { min: 6, message: '用户名至少6位' },
+        { min: 4, message: '用户名至少4位' },
         { max:10, message: '用户名最多8位' },
         { pattern: /^[a-zA-Z0-9_]+$/, message: '只支持字母数字下划线' }
         ]}>
