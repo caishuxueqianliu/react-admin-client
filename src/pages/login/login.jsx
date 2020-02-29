@@ -1,20 +1,53 @@
 import React from 'react'
 import  './login.less'
 import logo from './images/logo.png'
-import { Form,Icon, Input, Button} from 'antd';
+import { Form,Input, Button} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
- class Login extends React.Component{
+ export default class Login extends React.Component{
 
 constructor(props){
         super(props);
     }
-handleSubmit=(event)=>{
-console.log(111)
-  }
+
     render(){
         
- const {getFieldDecorator}=this.props.form
+
+  const onFinish = values => {
+    console.log('Received values of form: ', values);
+
+ }
+
+const onFinishFailed=( values, errorFields, outOfDate)=>{
+
+  console.log(values, errorFields, outOfDate)
+}
+const validatePwd=(rule, value,callback) => {
+
+         if (!value ) {
+            callback('Please input your Username!!')
+              }
+              else if (value.length<6){
+
+ callback('密码至少6位')
+              }
+              
+     else if(value.length>10){
+        callback('密码至多10位')
+     }
+     else  if(!/^[a-zA-Z0-9_]+$/.test(value)){
+        callback('只支持字母数字下划线')
+     }
+     else {
+       callback()
+     }
+
+
+   }
+
+
+
+
            return (<div className="login">
                   
 <header className='login-header'>
@@ -26,54 +59,45 @@ console.log(111)
 <section className='login-content'>
 
           <h2>登陆界面</h2>
-       <Form onSubmit={this.handleSubmit}
+   <Form 
+
+
       name="normal_login"
       className="login-form"
       initialValues={{ remember: true }}
-      
-    >
-       <Form.Item>
-                            {
-                                getFieldDecorator('username',{
-                                    rules:[
-                                        {required:true,whitespace:true,message:'用户名必须输入！'},
-                                        {min:4,message:'用户名必须大于4位'},
-                                        {max:12,message:'用户名最多只能12位'},
-                                        {pattern:/^[a-zA-Z0-9_]+$/,message:'用户名只能是字母、数字、下划线'}
-                                    ],
-                                    //initialValue:'admin' //默认显示值
-                                })(
-                                <Input
-                                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    placeholder="用户名"
-                                    />)
-                            }
-                            
-                        </Form.Item>
-                        <Form.Item>
-                            {
-                                getFieldDecorator('password',{
-                                    rules:[
-                                        { validator: this.validatePwd}
-                                    ]
-                                })(
-                                <Input
-                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    type="password"
-                                    placeholder="密码"
-                                    />)
-                            }
-                            
-                        </Form.Item>
+      onFinish={onFinish}
+onFinishFailed={onFinishFailed}    >
+      <Form.Item
+        name="username"
+        rules={[
+        { required: true, whitespace:true, message: 'Please input your Username!' },
+        { min: 6, message: '用户名至少6位' },
+        { max:10, message: '用户名最多8位' },
+        { pattern: /^[a-zA-Z0-9_]+$/, message: '只支持字母数字下划线' }
+        ]}>
+        <Input prefix={<UserOutlined className="site-form-item-icon" style={{color:'rgba(0,0,0,.25)'}}/>} placeholder="Username" />
+      </Form.Item>
+      <Form.Item
+        name="password"
+        rules={[
+    
+           {validator:validatePwd}
+        ]}>
+        <Input
+          prefix={<LockOutlined className="site-form-item-icon" style={{color:'rgba(0,0,0,.25)'}}/>}
+          type="password"
+          placeholder="Password"
+        />
+      </Form.Item>
      
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
           Log in
         </Button>
+       
       </Form.Item>
     </Form>
-
 </section>
                  </div>
 )
@@ -83,10 +107,3 @@ console.log(111)
   
 
 }
-
-
-const WrapLogin=Form.create()(Login)
-
-  export default WrapLogin
-
-  
