@@ -2,6 +2,7 @@ import React from 'react'
 import {BrowserRouter, Route, Link,Switch,Redirect} from 'react-router-dom'
 import Admin from './pages/admin/admin.jsx'
 import Login from './pages/login/login.jsx'
+
 //import { Button,message } from 'antd';
 export default class App extends React.Component{
 
@@ -10,10 +11,10 @@ export default class App extends React.Component{
               return <BrowserRouter>
                 
      <Switch>
-                           <Route exact path  ="/login" component={Login}/>
-                          <Route exact path="/admin"  component={Admin}/>
-                         <Redirect path  ="/"   to="/login"/> 
-
+                        <Route path  ="/login" component={Login}/>
+                          <Route path="/"  component={Admin}/>
+                        
+             
      </Switch>
 
                       </BrowserRouter>
