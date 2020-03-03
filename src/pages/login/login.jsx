@@ -7,21 +7,19 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import axios from 'axios'
  export default class Login extends React.Component{
 
-constructor(props){
-        super(props);
-    }
+
 
     render(){
        var nickname=localStorage.getItem('user_key')  
 if (nickname) {
        //this.props.history.replace('/admin') // 事件回调函数中进行路由跳转
-      return <Redirect to="/"/> // 自动跳转到指定的路由路径
+     return <Redirect to="/"/> // 自动跳转到指定的路由路径
     }
   const onFinish = values => {
-    console.log('Received values of form: ', values);
+    //console.log('Received values of form: ', values);
  
              axios.post('/login',{values}).then( (res)=>{
-              console.log(res.data.status)
+            //  console.log(res.data.status)
                   if(res.data.status===0){
                     var nickname= res.data.data.username
                   localStorage.setItem('user_key', nickname)
@@ -40,28 +38,28 @@ const onFinishFailed=( values, errorFields, outOfDate)=>{
 
   console.log(values, errorFields, outOfDate)
 }
-const validatePwd=(rule, value,callback) => {
+// const validatePwd=(rule, value,callback) => {
 
-         if (!value ) {
-            callback('Please input your Username!!')
-              }
-              else if (value.length<4){
+//          if (!value ) {
+//             callback('Please input your Username!!')
+//               }
+//               else if (value.length<4){
 
- callback('密码至少4位')
-              }
+//  callback('密码至少4位')
+//               }
               
-     else if(value.length>10){
-        callback('密码至多10位')
-     }
-     else  if(!/^[a-zA-Z0-9_]+$/.test(value)){
-        callback('只支持字母数字下划线')
-     }
-     else {
-       callback()
-     }
+//      else if(value.length>10){
+//         callback('密码至多10位')
+//      }
+//      else  if(!/^[a-zA-Z0-9_]+$/.test(value)){
+//         callback('只支持字母数字下划线')
+//      }
+//      else {
+//        callback()
+//      }
 
 
-   }
+//    }
 
 
 
@@ -99,7 +97,10 @@ onFinishFailed={onFinishFailed}    >
         name="password"
         rules={[
     
-           {validator:validatePwd}
+          { required: true, whitespace:true, message: 'Please input your password!' },
+          { pattern: /^[a-zA-Z0-9]+$/, message: '只支持字母数字' },
+           { min: 4, message: '密码至少4位' },
+        { max:10, message: '密码最多8位' },
         ]}>
         <Input
           prefix={<LockOutlined className="site-form-item-icon" style={{color:'rgba(0,0,0,.25)'}}/>}

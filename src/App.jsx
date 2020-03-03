@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter, Route, Link,Switch,Redirect} from 'react-router-dom'
+import {BrowserRouter, Route,Switch} from 'react-router-dom'
 import Admin from './pages/admin/admin.jsx'
 import Login from './pages/login/login.jsx'
 
@@ -8,7 +8,7 @@ export default class App extends React.Component{
 
            render(){
                   
-              return <BrowserRouter>
+              return (<BrowserRouter>
                 
      <Switch>
                         <Route path  ="/login" component={Login}/>
@@ -18,7 +18,7 @@ export default class App extends React.Component{
      </Switch>
 
                       </BrowserRouter>
-
+)
 
               }
  

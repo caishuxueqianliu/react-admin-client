@@ -1,48 +1,75 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
+import {Form,Select,Input} from 'antd'
 
-import {
-  Form,
-  Input
-} from 'antd'
+const Item = Form.Item;
+const Option = Select.Option;
+/* 添加分类的form组件 */
+export default class UpdateForm extends Component {
+     constructor(props){
+        super(props);
+          //this.props.meth(this)
+   
+    // static propTypes = {
+    //     setForm:PropTypes.func.isRequired,
+    //     categorys:PropTypes.array.isRequired,  //一级分类的数组
+    //     parentId:PropTypes.string.isRequired,  //父分类的ID
+    // }
+    // componentWillMount(){
+    //     this.props.setForm(this.props.form)
+    // }
+    this.state={
+        value:""
+    }
+ }
+    getsz=()=>{
+        //console.log(this.props.categoryName.name)
+        
 
-const Item = Form.Item
+    }
+     componentWillMount () {
+        // this.getsz()
 
-/* 
-添加/修改分类的Form组件
-*/
-class AddUpdateForm extends Component {
-
-  static propTypes = {
-    setForm: PropTypes.func.isRequired,
-    categoryName: PropTypes.string,
   }
+reset=()=>{
+  this.form.resetFields();
 
-  componentWillMount () {
-    this.props.setForm(this.props.form)
-  }
-
-  render() {
-    const { getFieldDecorator } = this.props.form
-    const { categoryName } = this.props
-    return (
-      <Form>
-        <Item>
-          {
-            getFieldDecorator('categoryName', {
-              initialValue: categoryName || '',
-              rules: [
-                {required: true, message: '分类名称必须输入'}
-              ]
-            })(
-              <Input type="text" placeholder="请输入分类名称"></Input>
-            )
-          }
-        </Item>
-      </Form>
-    )
-  }
 }
 
-export default Form.create()(AddUpdateForm)
+names=(e)=>{
+if(e && e.target && e.target.value){
+      let value = e.target.value;
+      //console.log(value)
+      this.setState(()=>({value:value }))
+    }
+         
+}
+    componentDidMount() {
+     
+    }
+    render() {
+       
+ const onFinish = values => {
+   // console.log('Received values of form: ', values);
+ 
+           
+        
+ }
+const name=this.props.categoryName
+this.props.msg(this.state.value)
+       
+
+        return (
+           <div>
+            <Form onFinish={onFinish}>
+          
+               
+                <Item>
+                   
+              <Input onChange={e=>this.names(e)} defaultValue={name} ></Input>               
+                </Item>
+            </Form>
+            </div> 
+        );
+    }
+}

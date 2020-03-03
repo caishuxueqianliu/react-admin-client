@@ -8,17 +8,17 @@ const menuList = [
   {
     title: '商品',
     key: '/products',
-    icon: 'appstore',
+    icon: 'AppstoreOutlined',
     children: [ // 子菜单列表
       {
         title: '品类管理',
         key: '/category',
-        icon: 'bars'
+        icon: 'AppstoreOutlined'
       },
       {
         title: '商品管理',
         key: '/product',
-        icon: 'tool'
+        icon: 'AppstoreOutlined'
       },
     ]
   },
@@ -26,33 +26,33 @@ const menuList = [
   {
     title: '用户管理',
     key: '/user',
-    icon: 'user'
+    icon: 'AppstoreOutlined'
   },
   {
     title: '角色管理',
     key: '/role',
-    icon: 'safety',
+    icon: 'AppstoreOutlined',
   },
 
   {
     title: '图形图表',
     key: '/charts',
-    icon: 'area-chart',
+    icon: 'AppstoreOutlined',
     children: [
       {
         title: '柱形图',
         key: '/charts/bar',
-        icon: 'bar-chart'
+        icon: 'AppstoreOutlined'
       },
       {
         title: '折线图',
         key: '/charts/line',
-        icon: 'line-chart'
+        icon: 'AppstoreOutlined'
       },
       {
         title: '饼图',
         key: '/charts/pie',
-        icon: 'pie-chart'
+        icon: 'AppstoreOutlined'
       },
     ]
   },
