@@ -24,8 +24,8 @@ export default class ProductHome extends Component {
 
 constructor(props) {
     super(props)
-
-this.state={
+}
+state={
   products:[],
   loading:true,
   total:0,
@@ -33,7 +33,7 @@ this.state={
   searchType:'productName'
 
 
-}
+
 }
  getProducts=(pageNum)=>{
 const {searchName,searchType}=this.state
@@ -116,8 +116,8 @@ reqSearchProducts ({pageNum,pageSize,searchName,searchType}).then((res)=>{
     render:(product)=>(
       <span>
         
-        <LinkButton>详情</LinkButton>
-         <LinkButton>修改</LinkButton>
+        <LinkButton onClick={()=>this.props.history.push('/product/detail',{product})}>详情</LinkButton>
+        <LinkButton onClick={()=> this.props.history.push('/product/addupate',product)}>修改</LinkButton>
       </span>
    )  }
 ];

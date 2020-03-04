@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
-import {Form,Select,Input} from 'antd'
+import {Form,Input} from 'antd'
 
 const Item = Form.Item;
-const Option = Select.Option;
+//const Option = Select.Option;
 /* 添加分类的form组件 */
 export default class UpdateForm extends Component {
      constructor(props){

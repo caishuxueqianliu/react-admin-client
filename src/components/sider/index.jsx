@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { Menu } from 'antd'
+import { Menu} from 'antd'
 
 import menuList from '../../config/menuConfig'
 import logo from './images/logo.png'
 import './index.less'
 import {
+
   AppstoreOutlined
- 
 } from '@ant-design/icons'
 const { SubMenu } = Menu
 
@@ -17,7 +17,11 @@ const { SubMenu } = Menu
 class LeftNav extends Component {
 
 
-  
+    state = {
+ 
+  };
+
+
 
   /*
   根据指定菜单数据列表产生<Menu>的子节点数组
@@ -144,15 +148,17 @@ class LeftNav extends Component {
     return (
       <div className="left-nav">
         <Link className="left-nav-link" to="/home">
-          <img src={logo} alt="logo"/>
-          <h1>硅谷后台</h1>
+           <img  src={logo} alt="logo"/>
+           <h1>React</h1>
+        
+         
         </Link>
 
         {/* 
         defaultSelectedKeys: 总是根据第一次指定的key进行显示
         selectedKeys: 总是根据最新指定的key进行显示
         */}
-        <Menu
+        <Menu 
          selectedKeys={[selectKey]}
          defaultOpenKeys={[this.openKey]}
           mode="inline"

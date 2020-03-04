@@ -9,11 +9,11 @@ import { message } from 'antd';
 import axios from 'axios'
 // const BASE = 'http://localhost:5000'
 
-const BASE = ''
+const BASE = '/api'
 
 
 // 登录
-//export const reqLogin = (username,password)=> ajax(BASE+'/login',{username,password},'POST');
+export const reqLogin = (values)=>  axios.post(BASE+'/login',{values});
 
 // 获取一级/二级分类的列表 
 export const reqCategorys = (parentId) =>axios.get(BASE + '/manage/category/list',{params:{parentId}});

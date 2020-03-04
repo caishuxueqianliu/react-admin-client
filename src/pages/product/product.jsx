@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Switch,Route,Redirect} from 'react-router-dom'
-import ProductHome from './home.jsx'
+import ProductHome from'./home.jsx'
 import ProductAddUpdate from './add-update.jsx'
 import ProductDetail from './detail.jsx'
 import './product.less'

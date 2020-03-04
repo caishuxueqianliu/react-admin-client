@@ -5,12 +5,14 @@ import {Redirect} from 'react-router-dom'
 import { Form,Input, Button,message} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import axios from 'axios'
+import {reqLogin} from "../../api/index.js"
  export default class Login extends React.Component{
 
 
 
     render(){
        var nickname=localStorage.getItem('user_key')  
+
 if (nickname) {
        //this.props.history.replace('/admin') // 事件回调函数中进行路由跳转
      return <Redirect to="/"/> // 自动跳转到指定的路由路径
@@ -18,7 +20,7 @@ if (nickname) {
   const onFinish = values => {
     //console.log('Received values of form: ', values);
  
-             axios.post('/login',{values}).then( (res)=>{
+             reqLogin(values).then( (res)=>{
             //  console.log(res.data.status)
                   if(res.data.status===0){
                     var nickname= res.data.data.username

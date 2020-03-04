@@ -8,7 +8,7 @@ import LinkButton from '../../components/link-button'
  */
 import AddForm from './add-from.jsx'
 import UpdateForm from './add-update-form.jsx'
- import {reqCategorys,reqCategoryInfo,reqAddCategorys,reqUpdateCategory} from '../../api/index.js'
+ import {reqCategorys,reqAddCategorys,reqUpdateCategory} from '../../api/index.js'
 export default class Category extends Component {
 constructor(props) {
         super(props);
@@ -55,10 +55,10 @@ addCategory=()=>{
           const parentId = this.state.parentId;
          // const categoryName = this.state.values;
           const categoryName = this.CategoryName;
-           const categoryNames = this.CategoryNames;
+           //const categoryNames = this.CategoryNames;
            //console.log(parentId ,categoryName,categoryNames)
   reqAddCategorys(parentId,categoryName).then(res=>{
-         if(res.data.status == 0){
+         if(res.data.status === 0){
             if(parentId === this.state.parentId){
               this.getdataSource();
             }else{
@@ -152,10 +152,10 @@ getdataSource=()=>{
      //           this.setState({name:nameArr})
      //     })
      dataSource.map(item=>{
-     	console.log(item.name)
+     //	console.log(item.name)
               
               this.state.name.push(item.name)
-               console.log(this.state.name)
+             //  console.log(this.state.name)
               // this.setState({name})
      })
 //}
@@ -230,7 +230,7 @@ this.CategoryNames=msg
 const title=this.state.parentId==='0'?'一级分类列表':(
 <span>
  <LinkButton onClick={this.showCategorys}>一级分类列表</LinkButton>
-<ArrowRightOutlined style={{marginRight :10}}/>
+<ArrowRightOutlined style={{marginRight :10,color:"#1DA57A",cursor:'pointer'}}/>
 <span>{this.state.parentName}</span>
 </span>
 	 )
