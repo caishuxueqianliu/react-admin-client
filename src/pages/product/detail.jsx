@@ -39,11 +39,7 @@ export default class ProductDetail extends Component {
 //       <img  className="product-img" key={img} src={BASE_IMG+img} alt="img"/>
 // ))
 
-	imgs.forEach(img=>this.images=(
 
-   <img  key={img} className="product-img" src={BASE_IMG+img} alt="img"/>
-
-))
     return (
        <div> 
         <Card title={title} className="product-detail" >
@@ -86,13 +82,13 @@ export default class ProductDetail extends Component {
 <span>
 
 {
-// 	imgs.forEach(img=>(
+	imgs.map(img=>(
 
-//    <img  key={img} className="product-img" src={BASE_IMG+img} alt="img"/>
+   <img  key={img} className="product-img" src={BASE_IMG+img} alt="img"/>
 
-// ))
+))
 // {images}
-this.images
+
 }
 </span>
 
@@ -100,7 +96,7 @@ this.images
 
      <Item className="item">
 <span className="left">商品详情</span>
-<span dangerouslySetInnerHTML={{__html:'<h1 style="color:red">联想sagagags</h1>'}}></span>
+<span dangerouslySetInnerHTML={{__html:detail}}></span>
  </Item> 
  </List>
 

@@ -1,131 +1,209 @@
 import React, { Component } from 'react'
-// import {
-//   Card,
-//   Icon,
-//   Form,
-//   Input,
-//   Select,
-//   Button,
-//   message
-// } from 'antd'
+import {
+  Card,
+  Upload,
+Cascader,
+  Form,
+  Input,
+  Select,
+  Button,
+  message,
+  
 
-// import { reqCategorys, reqAddUpdateProduct } from '../../api'
+} from 'antd'
+import {ArrowLeftOutlined,LoadingOutlined, PlusOutlined} from '@ant-design/icons'
+import { reqCategorys, reqAddUpdateProduct } from '../../api'
 // import PicturesWall from './pictures-wall'
 // import LinkButton from '../../components/link-button'
 // import memoryUtils from '../../utils/memoryUtils'
 // import RichTextEditor from './rich-text-editor'
 
-// const Item = Form.Item
-// const Option = Select.Option
-
+const Item = Form.Item
+const Option = Select.Option
+const { TextArea } = Input;
 /*
 商品添加/更新的路由组件
 */
 export default class ProductAddUpdate extends Component {
 
- //  state = {
- //    categorys: []
- //  }
+  state = {
+        options:[],
+    };
+ initOptions = async (categorys)=>{
+        //根据categorys生成options数组
+        const options = categorys.map(c =>({
+            value: c._id,
+            label: c.name,
+            isLeaf: false,  //不是叶子
+        }));
+        // 如果是一个二级分类商品的更新
+        // const {isUpdate,product} = this;
+        // const {pCategoryId,categoryId} = product;
+        // if(isUpdate && pCategoryId !== '0'){
+        //     // 获取对应的二级分类表表
+        //    const subCategorys = await this.getCategorys(pCategoryId);
+        //     // 生成二级下拉列表的options
+        //    const childOptions = subCategorys.map(c=>({
+        //         value: c._id,
+        //         label: c.name,
+        //         isLeaf: true,
+        //     }));
 
- //  constructor(props) {
- //    super(props);
- //    // 创建ref容器, 并保存到组件对象
- //    this.pwRef = React.createRef()
- //    this.editorRef = React.createRef()
- //  }
+        //     // 找到当前商品对应的一级option对象
+        //     const targetOption = options.find(option=>option.value === pCategoryId);
 
- //  getCategorys = async () => {
- //    const result = await reqCategorys()
- //    if (result.status === 0) {
- //      const categorys = result.data
- //      this.setState({ categorys })
- //    }
- //  }
+        //     // 关联对应的一级option上
+        //     targetOption.children = childOptions;
+        // }
+        this.setState({
+            options
+        });
+    }
+    //异步获取一级/二级分类表并显示
+    getCategorys = async (parentId)=>{
+        const result = await reqCategorys(parentId);
+       
+        if(result.data.status === 0){
+            const categorys = result.data.data;
 
- //  /* 
- //  对价格进行自定义验证
- //  */
- // validatePrice = (rule, value, callback) => {
- //    if (value==='') {
- //      callback()
- //    } else if (value * 1 <=0) {
- //      callback('价格必须大于0')
- //    } else {
- //      callback()
- //    }
- // }
+            if(parentId === '0'){  //一级列表
+                this.initOptions(categorys);
+            }else{  //二级列表
+                return categorys   //返回二级列表,  当前async函数返回的promise就会成功且value为categorys
+            }
+            this.initOptions(categorys);
+             console.log(categorys)
+        }
+    }
+//用于加载下一级列表的回调函数
+    loadData = async selectedOptions => {
+        //得到选择的option对象
+        const targetOption = selectedOptions[selectedOptions.length - 1];
+        //显示loading
+        targetOption.loading = true;
+    
+        //根据选中的分类,请求获取二级分类列表
+        const subCategorys = await this.getCategorys(targetOption.value);
+        targetOption.loading = false;
+        if(subCategorys && subCategorys.length > 0){
+            //生成当前一个二级列表的options
+            const childOptions = subCategorys.map(c =>({
+                value: c._id,
+                label: c.name,
+                isLeaf: true,
+            }));
+            //关联到当前option上
+            targetOption.children = childOptions;
+        }else{
+            targetOption.isLeaf = true;
+        }
+        
+        this.setState({
+        options: [...this.state.options],
+        });
+      };
 
- // /* 
- //  处理提交的回调
- // */
- // handleSubmit = (event) => {
- //   // 阻止事件的默认行为(提交表单)
- //   event.preventDefault()
 
- //   // 进行统一的表单验证
- //   this.props.form.validateFields(async (err, values) => {
- //      if (!err) {
- //        const {name, desc, price, categoryId} = values
- //        console.log('发送请求', name, desc, price, categoryId)
-
- //        // 收集上传的图片文件名的数组
- //        const imgs = this.pwRef.current.getImgs()
- //        console.log('imgs', imgs)
- //        // 输入的商品详情的标签字符串
- //        const detail = this.editorRef.current.getDetail()
- //        console.log('detail', detail)
-
- //        // 封装product对象
- //        const product = {name, desc, price, categoryId, imgs, detail}
- //        if (this.isUpdate) {
- //          product._id = this.product._id
- //        }
-
- //        // 发请求添加或修改
- //        const result = await reqAddUpdateProduct(product)
- //        if (result.status===0) {
- //          message.success(`${this.isUpdate ? '修改' : '添加'}商品成功`)
- //          this.props.history.replace('/product')
- //        } else {
- //          message.error(result.msg)
- //        }
- //      } 
- //    })
- // }
-
- // componentWillMount () {
- //   this.product = memoryUtils.product
- //   this.isUpdate = !!this.product._id
- // }
-
- //  componentDidMount() {
- //    this.getCategorys()
- //  }
+  componentDidMount() {
+    this.getCategorys('0')
+console.log(this.props.location.state)
+ }
 
   render() {
-    // const { categorys } = this.state
-    // const {isUpdate, product} = this
 
-    // const { getFieldDecorator } = this.props.form
-   
-    // const title = (
-    //   <span>
-    //     <LinkButton onClick={() => this.props.history.goBack()}>
-    //       <Icon type="arrow-left" />
-    //     </LinkButton>
-    //     <span>{isUpdate ? '修改商品' : '添加商品'}</span>
-    //   </span>
-    // )
+    
+       const onFinish = values => {
 
-    // // 指定form中所有item的布局
-    // const formLayout = {
-    //   labelCol: { span: 2 },
-    //   wrapperCol: { span: 8 }
-    // }
+    console.log('Success:', values);
 
+  };      
+       const title=(
+           <span>
+             
+<ArrowLeftOutlined onClick={()=>this.props.history.goBack()} style={{color:"#1DA57A",cursor:'pointer'}}/>
+       <span style={{marginLeft:10}}>添加商品</span>
+           </span>
+
+               )
+const uploadButton = (
+      <div>
+        <PlusOutlined />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
+   const formItemLayout = {
+            labelCol: {span:2},
+            wrapperCol: {span:8},
+        };
     return (
 
-      <div>add</div>
+    <Card title={title} className='product-detail'>
+                <Form {...formItemLayout} onFinish={onFinish}>
+                 <Item
+        label="商品名称"
+        name="name"
+        rules={[{ required: true, message: 'Please input content!' }]}
+      >
+       
+                <Input placeholder='商品名称'/>
+                                           
+                    </Item>
+            <Item
+       label='商品描述'
+        name="desc"
+        rules={[{ required: true, message: 'Please input content!' }]}
+      >
+       
+               <TextArea placeholder="请输入商品描述" autoSize={{ minRows: 4, maxRows: 8}} />
+                                           
+              </Item>
+                
+                 <Item
+        label="商品价格"
+        name="price"
+        rules={[{ required: true, message: 'Please input content!' }]}
+      >
+       
+               <Input type='number' placeholder='商品价格' addonAfter='元'/>
+                                           
+                    </Item>                  
+                        
+                    
+                     <Item
+        label="商品分类"
+        name="categoryId"
+        
+      >
+       
+               <Cascader
+                   options={this.state.options}   //需要显示的列表数据数组
+                                loadData={this.loadData}  //当选择某个列表项,加载下一级列表的监听回调
+                            />
+                                           
+                    </Item>         
+
+                
+                    <Item label='商品图片'>
+                        <Upload
+        name="avatar"
+        listType="picture-card"
+        className="avatar-uploader"
+        showUploadList={false}
+        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+       // beforeUpload={beforeUpload}
+      //  onChange={this.handleChange}
+      >
+      {uploadButton}
+      </Upload>
+                    </Item>
+                    <Item label='商品详情' labelCol={{span:2}} wrapperCol={{span:20}}>
+                        
+                    </Item>
+                    <Item>
+                        <Button type='primary'htmlType="submit" >提交</Button>
+                    </Item>
+                </Form>
+            </Card>
      )
 
 

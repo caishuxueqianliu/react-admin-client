@@ -79,7 +79,7 @@ class LeftNav extends Component {
   getMenuNodes = (menuList) => {
 
   //   // 得到当前请求的path
-   const path = this.props.location.pathname
+   let path = this.props.location.pathname
 
     return menuList.map(item => {
       if (!item.children) {
@@ -141,12 +141,13 @@ class LeftNav extends Component {
     
     // 得到当前请求路径, 作为选中菜单项的key
     let selectKey = this.props.location.pathname // /product/xxx
-    // if (selectKey.indexOf('/product')===0) {
-    //   selectKey = '/product'
-    // }
+    if (selectKey.indexOf('/product')===0) {
+     selectKey = '/product'
+    }
     
     return (
-      <div className="left-nav">
+      <div className="left-nav" >
+
         <Link className="left-nav-link" to="/home">
            <img  src={logo} alt="logo"/>
            <h1>React</h1>
@@ -159,6 +160,7 @@ class LeftNav extends Component {
         selectedKeys: 总是根据最新指定的key进行显示
         */}
         <Menu 
+            
          selectedKeys={[selectKey]}
          defaultOpenKeys={[this.openKey]}
           mode="inline"
@@ -167,6 +169,7 @@ class LeftNav extends Component {
           { this.menuNodes }
       {/*递归调用*/}
         </Menu>
+
       </div>
     )
   }

@@ -35,9 +35,22 @@ state={
 
 
 }
+
+   updateStatus = async (_id,status,product)=>{
+        const result = await reqUpdateStatus(_id,status);
+//console.log(product._id)
+
+        if(result.data.status === 0){
+            message.success('更新商品成功');
+            this.getProducts(this.pageNum);
+        }
+    }
+
+
  getProducts=(pageNum)=>{
 const {searchName,searchType}=this.state
 const pageSize=PAGE_SIZE;
+ this.pageNum = pageNum; 
 if(searchName){
 reqSearchProducts ({pageNum,pageSize,searchName,searchType}).then((res)=>{
      if(res.data.status===0){
@@ -98,15 +111,16 @@ reqSearchProducts ({pageNum,pageSize,searchName,searchType}).then((res)=>{
    {
     width:100,
     title: '状态',
-    dataIndex: 'status',
-    render:(status)=>{
-      return(
+   // dataIndex: 'status',
+    render:(product)=>{
+             const {_id,status}=product
+  return(
  <span>
-   <Button type='primary'>下架</Button>
-   <span>在售</span>
+ <span>{status === 1 ? '在售' : '已下架'}</span> <Button type='primary' onClick={() =>this.updateStatus(_id,status===1?2:1,product)}>{status === 1 ? '下架' : '上架'}</Button>
  </span>
 
          )
+
     }
   },
   {
@@ -117,7 +131,7 @@ reqSearchProducts ({pageNum,pageSize,searchName,searchType}).then((res)=>{
       <span>
         
         <LinkButton onClick={()=>this.props.history.push('/product/detail',{product})}>详情</LinkButton>
-        <LinkButton onClick={()=> this.props.history.push('/product/addupate',product)}>修改</LinkButton>
+       <LinkButton onClick={()=>this.props.history.push('/product/addupdata',product)}>修改</LinkButton>
       </span>
    )  }
 ];
@@ -155,7 +169,7 @@ onChange={event=>{this.setState({searchName:event.target.value})}} value={search
 
 const extra=(
 
-        <Button type='primary'>
+        <Button type='primary'onClick={()=>this.props.history.push('/product/addupdata')}>
         <PlusOutlined/>
           添加商品
         </Button>
