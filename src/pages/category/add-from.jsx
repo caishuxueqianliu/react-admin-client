@@ -36,7 +36,7 @@ export default class AddForm extends Component {
 
 this.props.msgs(this.state.categoryName)
 this.props.msgss(this.state.categoryNames)
-let params=this.props.categorys.map(c =><Option value={c._id}>{c.name}</Option>)
+let params=this.props.categorys.map(c =><Option key= "c._id"value={c._id}>{c.name}</Option>)
         return (
            <div>
            

@@ -43,8 +43,8 @@ export const reqSearchProducts = ({pageNum,pageSize,searchName,searchType})=>axi
 export const reqUpdateStatus = (productId,status) => axios.post(BASE+'/product/updateStatus',{productId,status});
 
 // // 删除图片
-// export const reqDeleteImg = (name) => ajax(BASE+'/manage/img/delete',{name},'POST');
-
+export const reqDeleteImg = (name) => axios.post(BASE+'/img/delete',{name});
+export const reqAddImg = (name) => axios.post(BASE+'/image/upload',{name});
 // 添加/删除商品
 export const reqAddOrUpdateProduct = (product)=>axios.post(BASE+'/product/'+(product._id?'update':'add'),product);
 

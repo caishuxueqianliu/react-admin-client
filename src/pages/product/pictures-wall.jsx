@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from "prop-types"
-import { Upload, Icon, Modal, message } from 'antd'
-import {reqDeleteImg} from '../../api'
-import {BASE_IMG} from '../../utils/Constants'
-
+import { Upload,  Modal, message } from 'antd'
+//import {reqDeleteImg} from '../../api'
+//import {BASE_IMG} from '../../utils/Constants'
+import {LoadingOutlined, PlusOutlined} from '@ant-design/icons'
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -111,7 +111,7 @@ export default class PicturesWall extends React.Component {
     return (
       <div>
         <Upload
-          action="/manage/img/upload" // 上传图片的url
+          action="/img/upload" // 上传图片的url
           name="image" // 图片文件对应参数名
           listType="picture-card" // 显示风格
           fileList={fileList} // 已上传的所有图片文件信息对象的数组
