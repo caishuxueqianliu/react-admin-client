@@ -7,12 +7,13 @@ Cascader,
   Input,
   Select,
   Button,
+Modal,
   message,
 } from 'antd'
 
 import {ArrowLeftOutlined,LoadingOutlined, PlusOutlined} from '@ant-design/icons'
 import { reqCategorys, reqAddUpdateProduct ,reqDeleteImg,reqAddImg} from '../../api'
-//import PicturesWall from './pictures-wall'
+import PicturesWall from './pictures-wall'
 // import LinkButton from '../../components/link-button'
 // import memoryUtils from '../../utils/memoryUtils'
 // import RichTextEditor from './rich-text-editor'
@@ -114,6 +115,7 @@ export default class ProductAddUpdate extends Component {
 //console.log(this.props.location.state)
  }
 
+
   render() {
 
 const {isUpdate,product}=this
@@ -158,17 +160,19 @@ reqAddImg(values).then(()=>{
         };
 
 
-
-
+ const { previewVisible, previewImage, fileList } = this.state;
+    const uploadButton = (
+      <div>
+        <PlusOutlined />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
 
 
    return (
 
     <Card title={title} className='product-update'>
-         <form action="http://localhost:5000/api/image/upload" method="post">
-       <input type="file" name='file'/>
-  <input type="submit" value="Submit" />
-</form>
+        
             <Form {...formItemLayout} onFinish={onFinish}>
       {
 
@@ -217,9 +221,8 @@ reqAddImg(values).then(()=>{
 
             
                     <Item label='商品图片'>
-                   
-                           
-                  
+                    
+                   < PicturesWall/>
                         </Item>
              //        <Item label='商品详情' labelCol={{span:2}} wrapperCol={{span:20}}>
                         
