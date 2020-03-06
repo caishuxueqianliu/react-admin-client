@@ -170,65 +170,72 @@ reqAddImg(values).then(()=>{
 
 
    return (
-
+  
     <Card title={title} className='product-update'>
-        
-            <Form {...formItemLayout} onFinish={onFinish}>
-      {
+    {
+//  <form id="tul1" action="http://localhost:5000/api/image/upload" enctype="multipart/form-data" method="post">
+// <input type="file" name="fname" />
+// <input type="submit" value="提交"/>
+// </form>
+   }         
+   <Form {...formItemLayout} onFinish={onFinish}>
 
-      //    <Item
-       //  label="商品名称"
-       //  name="name"
+
+         <Item
+        label="商品名称"
+        name="name"
        
-       //  rules={[{ required: true, message: 'Please input content!' }]} >
+        rules={[{ required: true, message: 'Please input content!' }]} >
        
-       //          <Input placeholder='商品名称' defaultValue={this.product.name}/>
+                <Input placeholder='商品名称' defaultValue={this.product.name}/>
                                            
-       //              </Item>
+                    </Item>
 
          
-       //  <Item
+        <Item
 
-       // label='商品描述'
-       //  name="desc"
-       //  rules={[{ required: true, message: 'Please input content!' }]} >
+       label='商品描述'
+        name="desc"
+        rules={[{ required: true, message: 'Please input content!' }]} >
        
-       //         <Input   placeholder="请输入商品描述"  defaultValue={this.product.desc}/>
+               <TextArea   placeholder="请输入商品描述"  defaultValue={this.product.desc}/>
                                            
-       //        </Item>
+              </Item>
                 
-       //           <Item
-       //  label="商品价格"
-       //  name="price"
-       //  rules={[{ required: true, message: 'Please input content!' }]} >
+                 <Item
+        label="商品价格"
+        name="price"
+        rules={[{ required: true, message: 'Please input content!' }]} >
        
-       //         <Input type='number' placeholder='商品价格' addonAfter='元'  defaultValue={this.product.price}/>
+               <Input type='number' placeholder='商品价格' addonAfter='元'  defaultValue={this.product.price}/>
                                            
-       //              </Item>                  
+                    </Item>                  
                         
              
-       //      <Item
-       //  label="商品分类"
-       //  name="categoryId">
+            <Item
+        label="商品分类"
+        name="categoryId">
        
-       //         <Cascader
+               <Cascader
                
-       //             options={this.state.options}   //需要显示的列表数据数组
-       //              loadData={this.loadData}  //当选择某个列表项,加载下一级列表的监听回调
-       //                      />
+                   options={this.state.options}   //需要显示的列表数据数组
+                    loadData={this.loadData}  //当选择某个列表项,加载下一级列表的监听回调
+                            />
                                            
-       //              </Item>         
+                    </Item>         
 
             
-                    <Item label='商品图片'>
-                    
-                   < PicturesWall/>
-                        </Item>
-             //        <Item label='商品详情' labelCol={{span:2}} wrapperCol={{span:20}}>
+                    <Item label='商品图片' name='imgs'>
+                     <PicturesWall />
+                 </Item>
+        
+
+             
+                    <Item label='商品详情' labelCol={{span:2}} wrapperCol={{span:20}}>
                         
-             //       </Item>
-             // 
-           } 
+                   </Item>
+             
+         
                   <Item>
                         <Button type='primary' htmlType="submit" >提交</Button>
                     </Item>
