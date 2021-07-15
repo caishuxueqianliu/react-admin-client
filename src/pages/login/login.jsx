@@ -87,6 +87,7 @@ const onFinishFailed=( values, errorFields, outOfDate)=>{
 onFinishFailed={onFinishFailed}    >
       <Form.Item
         name="username"
+     
         rules={[
         { required: true, whitespace:true, message: 'Please input your Username!' },
         { min: 4, message: '用户名至少4位' },
@@ -97,6 +98,7 @@ onFinishFailed={onFinishFailed}    >
       </Form.Item>
       <Form.Item
         name="password"
+
         rules={[
     
           { required: true, whitespace:true, message: 'Please input your password!' },
@@ -116,7 +118,7 @@ onFinishFailed={onFinishFailed}    >
         <Button type="primary" htmlType="submit" className="login-form-button">
           Log in
         </Button>
-       
+        <p style={{color:'#ffffff'}}>用户名 admin 密码 admin</p>
       </Form.Item>
     </Form>
 </section>

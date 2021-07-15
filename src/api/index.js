@@ -7,9 +7,9 @@ import jsonp from 'jsonp'  // axios不能发jsonp请求
 //import ajax from './ajax'
 import { message } from 'antd';
 import axios from 'axios'
-// const BASE = 'http://localhost:5000'
+// const BASE = 'http://106.14.40.150:3003'
 
-const BASE = '/api'
+ const BASE = '/reactAdminApi'
 
 
 // 登录

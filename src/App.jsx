@@ -8,7 +8,7 @@ export default class App extends React.Component{
 
            render(){
                   
-              return (<BrowserRouter>
+              return (<BrowserRouter basename="/reactAdmin">
                 
      <Switch>
                         <Route path  ="/login" component={Login}/>
